@@ -19,7 +19,7 @@ public class ATM {
     }
 
     boolean takeMoney(int summaOfMoney) {
-        if (allMoney >= summaOfMoney) {
+        if (allMoney >= summaOfMoney && summaOfMoney%100/20 <= count20) {
             System.out.println("Операция выполнена успешно!");
             int temp = summaOfMoney / 100;
             if (count100 <= temp) {
@@ -50,7 +50,7 @@ public class ATM {
 
             return true;
         } else {
-            System.out.println("Операция не выполнена!" + "\n" + "Недостаточно средств!");
+            System.out.println("Операция не выполнена!" + "\n" + "Недостаточно средств или недостаточно купюр нужного номинала!");
             return false;
         }
     }
