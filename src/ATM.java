@@ -19,7 +19,7 @@ public class ATM {
     }
 
     boolean takeMoney(int summaOfMoney) {
-        if (allMoney >= summaOfMoney && summaOfMoney%100/20 <= count20) {
+        if (allMoney >= summaOfMoney && (summaOfMoney %50/ 20 <= count20 && summaOfMoney % 100 / 20 <= count20) && summaOfMoney % 100 / 50 <= count50) {
             System.out.println("Операция выполнена успешно!");
             int temp = summaOfMoney / 100;
             if (count100 <= temp) {
@@ -29,6 +29,7 @@ public class ATM {
             allMoney -= temp * 100;
             count100 -= temp;
             System.out.println("100: " + temp);
+
 
             temp = summaOfMoney / 50;
             if (count50 <= temp) {
@@ -47,6 +48,7 @@ public class ATM {
             allMoney -= temp * 20;
             count20 -= temp;
             System.out.println("20: " + temp);
+
 
             return true;
         } else {
