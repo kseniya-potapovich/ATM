@@ -21,6 +21,10 @@ public class ATM {
     }
 
     boolean takeOfMoney(int summaOfMoney) {
+        if (summaOfMoney % 10 != 0) {
+            System.out.println("Операция не выполнена");
+            return false;
+        }
         int n = count100, m = count50, k = count20;
         int[] array = new int[3];
         if (summaOfMoney <= allMoney) {
