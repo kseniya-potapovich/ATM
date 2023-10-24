@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class ATM {
     int count20;
     int count50;
@@ -18,41 +20,59 @@ public class ATM {
         allMoney += x100 * 100 + x50 * 50 + x20 * 20;
     }
 
-    boolean takeMoney(int summaOfMoney) {
-        if (allMoney >= summaOfMoney && (summaOfMoney %50/ 20 <= count20 && summaOfMoney % 100 / 20 <= count20) && summaOfMoney % 100 / 50 <= count50) {
-            System.out.println("Операция выполнена успешно!");
-            int temp = summaOfMoney / 100;
-            if (count100 <= temp) {
-                temp = count100;
+    boolean takeOfMoney(int summaOfMoney) {
+        int n = count100, m = count50, k = count20;
+        int[] array = new int[3];
+        if (summaOfMoney <= allMoney) {
+            int temp = summaOfMoney % 100;
+            if (temp / 10 % 2 == 1) {
+                if (m > 0) {
+                    array[1]++;
+                    m--;
+                    summaOfMoney -= 50;
+                    temp = summaOfMoney % 100;
+                } else {
+                    System.out.println("Операция не выполнена");
+                    return false;
+                }
             }
-            summaOfMoney -= temp * 100;
-            allMoney -= temp * 100;
-            count100 -= temp;
-            System.out.println("100: " + temp);
-
-
+            temp = temp / 20;
+            if (temp <= k) {
+                array[2] += temp;
+                summaOfMoney -= 20 * temp;
+                k -= temp;
+            } else {
+                System.out.println("Операция не выполнена");
+                return false;
+            }
+            temp = summaOfMoney / 100;
+            if (temp <= n) {
+                array[0] = temp;
+                summaOfMoney -= 100 * temp;
+                n -= temp;
+            } else {
+                array[0] = n;
+                summaOfMoney -= 100 * n;
+                n -= n;
+            }
             temp = summaOfMoney / 50;
-            if (count50 <= temp) {
-                temp = count50;
+            if (temp > 0) {
+                if (temp <= m) {
+                    array[1] += temp;
+                    m -= temp;
+                } else {
+                    System.out.println("Операция не выполнена");
+                    return false;
+                }
             }
-            summaOfMoney -= temp * 50;
-            allMoney -= temp * 50;
-            count50 -= temp;
-            System.out.println("50: " + temp);
-
-            temp = summaOfMoney / 20;
-            if (count20 <= temp) {
-                temp = count20;
-            }
-            summaOfMoney -= temp * 20;
-            allMoney -= temp * 20;
-            count20 -= temp;
-            System.out.println("20: " + temp);
-
-
+            count100 = n;
+            count50 = m;
+            count20 = k;
+            allMoney = n * 100 + m * 50 + k * 20;
+            System.out.println(Arrays.toString(array));
             return true;
         } else {
-            System.out.println("Операция не выполнена!" + "\n" + "Недостаточно средств или недостаточно купюр нужного номинала!");
+            System.out.println("Операция не выполнена");
             return false;
         }
     }
